@@ -153,10 +153,6 @@ def plot_time(time_nome):
 
     fig.update_layout(
         barmode="stack",
-        title=dict(
-            text=f"Faturamento vs Metas – Time {time_nome}",
-            font=dict(size=18, family="Arial", color="black")
-        ),
         xaxis=dict(
             title="Valores (R$)",
             showgrid=True,
@@ -263,10 +259,6 @@ def plot_celula(celula_nome):
 
     fig.update_layout(
         barmode="stack",
-        title=dict(
-            text=f"Faturamento vs Metas – Célula {celula_nome}",
-            font=dict(size=18, family="Arial", color="black")
-        ),
         xaxis=dict(
             title="Valores (R$)",
             showgrid=True,
@@ -296,22 +288,23 @@ def plot_celula(celula_nome):
 
 st.set_page_config(page_title="Acompanhamento Comercial SJC", layout="wide")
 
-# título
-st.title("📊 Acompanhamento Comercial SJC")
+st.markdown('<h1 style="font-weight: normal;">📊 Acompanhamento Comercial SJC</h1>',
+            unsafe_allow_html=True)
 
 # seletor na barra lateral
 esteiras = ["CIS", "Canal ED", "GGB", "Grandes Eventos", "Novos Negócios"]
 time_escolhido = st.sidebar.selectbox("Selecione a esteira:", esteiras)
 
+
 # gera o gráfico para a esteira selecionada
 fig = plot_time(time_escolhido)
 if fig:
     with st.container(border=True):   # ✅ cria o “card” com borda
-        st.subheader("Faturamento por Consultor")
+        st.subheader(f"Faturamento por Consultor - {time_escolhido}")
         st.plotly_chart(fig, use_container_width=True)
 
 fig_celula = plot_celula(time_escolhido)
 if fig_celula:
     with st.container(border=True):
-        st.subheader("Faturamento da Célula")
+        st.subheader(f"Faturamento da Célula - {time_escolhido}")
         st.plotly_chart(fig_celula, use_container_width=True)
